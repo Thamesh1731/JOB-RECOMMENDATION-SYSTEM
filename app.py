@@ -3,6 +3,7 @@ import re
 import streamlit as st
 import pickle
 import numpy as np
+import base64
 
 
 nltk.download('punkt')
@@ -22,15 +23,28 @@ def cleanResume(text):
     cleanText = re.sub('\s+', ' ', cleanText)
     return cleanText
 
+# def show_pdf(file_path):
+#     with open(file_path, "rb") as f:
+#         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+#     # pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
+#     pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+#     st.markdown(pdf_display, unsafe_allow_html=True)
+def get_pdf_file_as_base64(file):
+    """Converts a file to base64."""
+    base64_pdf = base64.b64encode(file.read()).decode('utf-8')
+    return base64_pdf
 
 def webApp():
     st.set_page_config(page_title="CareerMatch")
-
-    # st.markdown(style, unsafe_allow_html=True)
-    # st.title('Discover the role that suits you best...')
-    st.markdown('<h1 style="font-size: 40px;">Discover the role that suits you best...</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-size: 40px;">Find the role based on your resume...</h1>', unsafe_allow_html=True)
 
     file = st.file_uploader('Select file to upload', type=['pdf'])
+
+    if file is not None:
+        base64_pdf = get_pdf_file_as_base64(file)
+        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="700" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
+    
 
     if file is not None:
         try:
@@ -77,9 +91,19 @@ def webApp():
         predicted_categories = topFiveLabels[0]
 
         print("Top 5 Predicted Categories:", predicted_categories)
-        st.write("Based on your resume you can apply to the following roles:")
+        st.markdown("""
+            <h2 style="font-weight: bold; font-size: 24px;">
+                Based on your resume you can apply to the following roles:
+            </h2>
+            """, unsafe_allow_html=True)
+        
+        colors = ["#1b2838", "#2a475e", "#3a6b87", "#4a8fb0", "#5db5da"]
         for i, cat in enumerate(predicted_categories):
-            st.write(f'{i + 1} - {cat}')
+            st.markdown(f"""
+                <div style="background-color: {colors[i]}; padding: 10px; border-radius: 5px; color: white; margin: 5px 0;">
+                    {i + 1} - {cat}
+                </div>
+                """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     webApp()
