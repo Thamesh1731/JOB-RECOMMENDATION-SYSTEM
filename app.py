@@ -119,7 +119,7 @@ def webApp():
     # Adding the chatbot iframe to the right side
     st.markdown(
         """
-        <iframe src="https://www.chatbase.co/chatbot-iframe/8M1YwJbV8wk47A0QUA0_T" width="100%" style="height: 100%; min-height: 700px" frameborder="0"></iframe>
+        <iframe src="https://www.chatbase.co/chatbot-iframe/8M1YwJbV8wk47A0QUA0_T" width="90%" style="height: 60%; min-height: 500px" frameborder="0"></iframe>
         """,
         unsafe_allow_html=True
     )
