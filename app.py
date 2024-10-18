@@ -66,13 +66,26 @@ def webApp():
     st.set_page_config(page_title="CareerMatch", layout="wide")
     
     # Optional: Add a logo (replace 'logo.png' with your file)
-    # logo = Image.open('logo.png')
-    # st.image(logo, width=100)
+     logo = Image.open('logo.png')
+     st.image(logo, width=100)
+
+    # CSS to reduce space between components
+    st.markdown("""
+    <style>
+    .css-1aumxhk {
+        margin-bottom: 0px;  /* Reducing margin-bottom to eliminate space */
+    }
+    .css-18e3th9 {
+        padding-top: 0rem;  /* Reducing padding-top */
+        padding-bottom: 0rem;  /* Reducing padding-bottom */
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     st.markdown('<h1 style="font-size: 40px; text-align: center;">Find the role based on your resume</h1>', unsafe_allow_html=True)
-    
+
     col1, col2 = st.columns(2)
-    
+
     with col1:
         file = st.file_uploader('Select file to upload', type=['pdf'])
 
@@ -108,13 +121,13 @@ def webApp():
                     </div>
                     """, unsafe_allow_html=True)
 
-    # Chatbot Integration
+    # Chatbot Integration with the provided iframe
     st.markdown("""
     <h2 style="text-align: center;">Ask Career-Related Questions</h2>
     <iframe
-        src="https://embed.chatbot.com/8M1YwJbV8wk47A0QUA0_T"
+        src="https://www.chatbase.co/chatbot-iframe/8M1YwJbV8wk47A0QUA0_T"
         width="100%"
-        height="500px"
+        style="height: 100%; min-height: 700px"
         frameborder="0">
     </iframe>
     """, unsafe_allow_html=True)
