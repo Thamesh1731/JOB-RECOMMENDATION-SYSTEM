@@ -13,7 +13,6 @@ nltk.download('stopwords')
 model = pickle.load(open('model.pkl', 'rb'))
 tfidf = pickle.load(open('tfidf.pkl', 'rb'))
 
-
 def cleanResume(text):
     """Clean and preprocess resume text."""
     cleanText = re.sub('http\S+\s', ' ', text)
@@ -24,7 +23,6 @@ def cleanResume(text):
     cleanText = re.sub('\s+', ' ', cleanText)
     return cleanText
 
-
 def extract_text_from_pdf(file):
     """Extracts text from a PDF file."""
     reader = PyPDF2.PdfReader(file)
@@ -32,7 +30,6 @@ def extract_text_from_pdf(file):
     for page in reader.pages:
         text += page.extract_text()
     return text
-
 
 def webApp():
     st.set_page_config(page_title="CareerMatch", layout="wide")
@@ -105,21 +102,24 @@ def webApp():
             topFiveLabels = [[categoryMapping[idx] for idx in indices_row] for indices_row in topFive]
             predicted_categories = topFiveLabels[0]
 
-            # Display the top predicted roles
+            # Display the top predicted roles with clickable links to Indeed
             st.markdown("<h2 style='font-weight: bold; font-size: 24px;'>Based on your resume you can apply to the following roles:</h2>", unsafe_allow_html=True)
 
             colors = ["#1b2838", "#2a475e", "#3a6b87", "#4a8fb0", "#5db5da"]
             for i, cat in enumerate(predicted_categories):
+                indeed_url = f"https://www.indeed.com/jobs?q={cat.replace(' ', '+')}"
                 st.markdown(f"""
                     <div style="background-color: {colors[i]}; padding: 10px; border-radius: 5px; color: white; margin: 5px 0;">
-                        {i + 1} - {cat}
+                        <a href="{indeed_url}" target="_blank" style="color: white; text-decoration: none;">
+                            {i + 1} - {cat}
+                        </a>
                     </div>
                     """, unsafe_allow_html=True)
 
     # Adding the chatbot iframe to the right side
     st.markdown(
         """
-        <iframe src="https://www.chatbase.co/chatbot-iframe/8M1YwJbV8wk47A0QUA0_T" width="90%" style="height: 60%; min-height: 500px" frameborder="0"></iframe>
+        <iframe src="https://www.chatbase.co/chatbot-iframe/8M1YwJbV8wk47A0QUA0_T" width="90%" style="height: 70%; min-height: 600px" frameborder="0"></iframe>
         """,
         unsafe_allow_html=True
     )
