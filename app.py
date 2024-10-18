@@ -35,7 +35,7 @@ def extract_text_from_pdf(file):
 
 
 def webApp():
-    st.experimental_set_page_config(page_title="CareerMatch")
+    st.set_page_config(page_title="CareerMatch")
     st.markdown('<h1 style="font-size: 40px;">Find the role based on your resume...</h1>', unsafe_allow_html=True)
 
     file = st.file_uploader('Select file to upload', type=['pdf'])
