@@ -66,8 +66,8 @@ def webApp():
     st.set_page_config(page_title="CareerMatch", layout="wide")
     
     # Optional: Add a logo (replace 'logo.png' with your file)
-     logo = Image.open('logo.png')
-     st.image(logo, width=100)
+    logo = Image.open('logo.png')
+    st.image(logo, width=100)
 
     # CSS to reduce space between components
     st.markdown("""
