@@ -39,7 +39,7 @@ def webApp():
         """
         <style>
             body {
-                background-image: url('logo.png');
+                background: url('logo.png');
                 background-size: cover;
             }
             .stApp {
